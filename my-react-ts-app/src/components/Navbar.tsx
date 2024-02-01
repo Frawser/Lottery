@@ -3,10 +3,12 @@ import { Link, Outlet } from 'react-router-dom';
 
 const Navbar = () => {
   return (
-    <div className="min-h-screen">
-      <nav className="bg-gray-800 text-white p-4 flex space-x-4">
-        <Link to="/" className="hover:text-gray-300">Home</Link>
-        <Link to="lottery" className="hover:text-gray-300">Lottery</Link>
+    <div>
+      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <div className='container-fluid'>
+          <Link to="/" className="navbar-brand">Home</Link>
+          <Link to="lottery" className="nav-item nav-link">Lottery</Link>
+        </div>
       </nav>
       <div className="mt-4">
         <Outlet />
