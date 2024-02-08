@@ -1,11 +1,10 @@
 const express = require('express');
 const axios = require('axios');
-const cors = require('cors'); // Import the cors middleware
+const cors = require('cors'); 
 
 const app = express();
 const port = 3001;
 
-// Use the cors middleware
 app.use(cors());
 
 app.get('/api/rss', async (req, res) => {

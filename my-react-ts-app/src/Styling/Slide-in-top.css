@@ -1,0 +1,193 @@
+/* Keyframes */
+
+@keyframes rotate-center {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes slide-in-top {
+  0% {
+    transform: translateY(-1000px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes roll {
+  0% {
+    transform: translateY(0) scale(0) rotateX(0deg);
+  }
+  25% {
+    transform: translateY(-5px) scale(1.2) rotateX(90deg);
+  }
+  50% {
+    transform: translateY(0) scale(0.9) rotateX(180deg);
+  }
+  75% {
+    transform: translateY(-5px) scale(1.1) rotateX(270deg);
+  }
+  100% {
+    transform: translateY(0) scale(1) rotateX(360deg);
+  }
+}
+
+@keyframes showActualNumber {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Classes */
+.animated-winning-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  margin: 5px;
+  background: radial-gradient(circle at 10px 10px, #ff8147, #582401);
+  color: #fff;
+  font-size: 24px;
+  border-radius: 50%;
+  opacity: 1; /* Change opacity to 1 to always display the numbers */
+  transform-style: preserve-3d;
+  perspective: 500px; /* Adjust as needed for desired depth */
+  /* Rotating animation */
+  /* animation: rotate-center 1s ease-in-out 0s 1 normal none;  */
+  /* Slide from Top animation */
+  animation: slide-in-top 1.2s linear 0s 1 normal none;
+}
+
+.animated-winning-numbers {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.row-numbers {
+  margin-top: 10px;
+  padding: 10px;
+
+  border-radius: 5px;
+}
+
+.matched-numbers-row {
+  border: 4px solid #5dff78;
+}
+
+.user-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  margin: 5px;
+  background: radial-gradient(circle at 10px 10px, #5cabff, #00194e);
+  color: #fff;
+  font-size: 24px;
+  border-radius: 50%;
+}
+/* Nth Classes */
+
+
+.animated-winning-number:nth-child(1) {
+  animation: slide-in-top-1 1s linear 0s 1 normal both;
+}
+
+.animated-winning-number:nth-child(2) {
+  animation: slide-in-top-2 1s linear 0.5s 1 normal both;
+}
+
+.animated-winning-number:nth-child(3) {
+  animation: slide-in-top-3 1s linear 1s 1 normal both;
+}
+
+.animated-winning-number:nth-child(4) {
+  animation: slide-in-top-4 1s linear 1.5s 1 normal both;
+}
+
+.animated-winning-number:nth-child(5) {
+  animation: slide-in-top-5 1s linear 2s 1 normal both;
+}
+
+.animated-winning-number:nth-child(6) {
+  animation: slide-in-top-6 1s linear 2.5s 1 normal both;
+}
+/* Child Keyframes */
+
+
+@keyframes slide-in-top-1 {
+  0% {
+    transform: translateY(-1000px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-in-top-2 {
+  0% {
+    transform: translateY(-1000px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-in-top-3 {
+  0% {
+    transform: translateY(-1000px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-in-top-4 {
+  0% {
+    transform: translateY(-1000px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-in-top-5 {
+  0% {
+    transform: translateY(-1000px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-in-top-6 {
+  0% {
+    transform: translateY(-1000px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
