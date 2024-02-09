@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
-import "../Styling/Slide-in-top.css"; 
+
+import "../Styling/Slide-in-top.css";
 // import "../Styling/Swirl.css";
 // import "../Styling/Rotating-center.css";
+// import "../Styling/Bouncing.css";
+import "../Styling/Background.css";
+import "../Styling/Firework.css";
 
 const LotteryComparison = () => {
   const [winningNumbers, setWinningNumbers] = useState<number[]>([]);
@@ -36,6 +40,12 @@ const LotteryComparison = () => {
       .filter((number) => winningNumbers.includes(number));
     setMatchedNumbers(matched);
   }, [winningNumbers, userNumbers]);
+
+  useEffect(() => {
+    const randomNumberOfRows = Math.floor(Math.random() * 5) + 1;
+    setNumberOfRows(randomNumberOfRows);
+    handleRandomizeUserNumbers(randomNumberOfRows);
+  }, []);
 
   const parseWinningNumbersFromFeed = (xmlDoc: Document) => {
     try {
@@ -78,16 +88,16 @@ const LotteryComparison = () => {
     }
   };
 
-  const handleRandomizeUserNumbers = () => {
-    const rows = Array.from({ length: numberOfRows }, () =>
+  const handleRandomizeUserNumbers = (randomNumberOfRows: number) => {
+    const rows = Array.from({ length: randomNumberOfRows }, () =>
       Array.from({ length: 5 }, () => Math.floor(Math.random() * 99) + 1)
     );
     setUserNumbers(rows);
   };
 
   return (
-    <div className="container mt-5 text-center">
-      <h1 className="text-3xl">Lottery Comparison</h1>
+    <div className="container text-center">
+      <h1 className="honk-font fs-1">Vinst Dragningen</h1>
       <div className="text-xl animated-winning-numbers ball">
         {winningNumbers.map((number, index) => (
           <span
@@ -99,26 +109,9 @@ const LotteryComparison = () => {
         ))}
       </div>
 
-      <div className="input-group mb-3 mt-5 w-25 mx-auto">
-        <span className="input-group-text">Antal Rader: </span>
-        <input
-          className="form-control"
-          type="number"
-          min={1}
-          max={20}
-          value={numberOfRows}
-          onChange={(e) => setNumberOfRows(parseInt(e.target.value))}
-        />
-      </div>
-      <button
-        className="btn btn-primary mt-3"
-        onClick={handleRandomizeUserNumbers}
-      >
-        Randomize User Numbers
-      </button>
+      <h2 className="honk-font fs-1 mt-1">Dina Rader:</h2>
       {userNumbers.map((row, rowIndex) => (
-        <div key={rowIndex} className="row-numbers mx-auto">
-          
+        <div key={rowIndex} className="row-numbers mt-1 p-1 mx-auto">
           <div className="user-numbers">
             {row.map((number, index) => (
               <span
@@ -133,6 +126,18 @@ const LotteryComparison = () => {
           </div>
         </div>
       ))}
+      <div>
+        <h3 className="honk-font fs-1 mt-2">
+          Antal Rätt: {matchedNumbers.length}
+        </h3>
+      </div>
+      <div>
+        <h3 className="honk-font fs-1 mt-2">
+          {matchedNumbers.length > 0
+            ? "Grattis! Du vann!"
+            : "Tyvärr, inga rätt!"}
+        </h3>
+      </div>
     </div>
   );
 };

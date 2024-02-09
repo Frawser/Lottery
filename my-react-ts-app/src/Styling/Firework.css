@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css?family=Baloo+Thambi|Muli|Righteous');
+
+/* 
+font-family: 'Righteous', cursive;
+font-family: 'Baloo Thambi', cursive;
+font-family: 'Muli', sans-serif;
+*/
+::selection {
+    background-color: transparent;
+
+}
+
+body {
+    color: #303030;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    font-family: 'Righteous', cursive;
+}
+
+canvas {
+    display: block;
+}
+
+.block-audio {
+    display: none;
+}
+
+.mahi_wish {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    color: #fff;
+}
+
+.mahi_wish p span {
+    display: block;
+    font-family: 'Baloo Thambi', cursive;
+    letter-spacing: initial;
+}
+
+.mahi_wish p {
+    font-size: 90px;
+    line-height: 1.5;
+    letter-spacing: 4.5px;
+}
+
+.mahi_wish p span i {
+    font-style: normal;
+    color: #F44336;
+}
+
+p.fixed {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    color: #fff;
+    font-family: 'Muli', sans-serif;
+    font-size: 14px;
+}
+
+p.fixed span {
+    position: absolute;
+    right: 5%;
+    font-size: 12px;
+    color: #FFEB3B;
+}
+
+@media only screen and (max-width:768px) {
+    .mahi_wish p {
+        font-size: 20px;
+        line-height: 1.5;
+        letter-spacing: 0px;
+    }
+}

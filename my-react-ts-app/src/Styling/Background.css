@@ -1,0 +1,32 @@
+/* background.css */
+.lottery-background {
+  background-image: linear-gradient(
+    109.6deg,
+    rgba(255, 194, 48, 1) 11.2%,
+    rgba(255, 124, 0, 1) 100.2%
+  );
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  width: 100%;
+  position: fixed;
+  top: 0;
+}
+
+.honk-font {
+  font-family: "Honk", system-ui;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings: "MORF" 15, "SHLN" 50;
+}
+
+body {
+    color: #303030;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    font-family: 'Righteous', cursive;
+}
+
