@@ -17,7 +17,7 @@ const Navbar = () => {
         className="navbar-toggle rounded-pill btn honk-font"
         onClick={toggleNavbar}
       >
-        X
+        
       </button>
       {navbarVisible && (
         <nav className="navbar navbar-expand-lg navbar-light bg-light">

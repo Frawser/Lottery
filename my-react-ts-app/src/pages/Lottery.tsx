@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import "../Styling/Slide-in-top.css";
-// import "../Styling/Swirl.css";
-// import "../Styling/Rotating-center.css";
-// import "../Styling/Bouncing.css";
+import "../Styling/Bouncing.css";
 import "../Styling/Background.css";
 import "../Styling/Firework.css";
 
@@ -12,6 +9,13 @@ const LotteryComparison = () => {
   const [userNumbers, setUserNumbers] = useState<number[][]>([]);
   const [matchedNumbers, setMatchedNumbers] = useState<number[]>([]);
   const [numberOfRows, setNumberOfRows] = useState(1);
+  const [animationCompleted, setAnimationCompleted] = useState(false); // State variable for animation completion
+  const [showResult, setShowResult] = useState(false); // State variable to control the display of result
+  const [finalMatchedNumber, setFinalMatchedNumber] = useState<number | null>(
+    null
+  );
+  const [finalMatchedAnimationCompleted, setFinalMatchedAnimationCompleted] =
+    useState(false);
 
   useEffect(() => {
     const fetchWinningNumbers = async () => {
@@ -46,6 +50,41 @@ const LotteryComparison = () => {
     setNumberOfRows(randomNumberOfRows);
     handleRandomizeUserNumbers(randomNumberOfRows);
   }, []);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setAnimationCompleted(true);
+    }, 5500); // Animation duration
+
+    // After animation completed, show "Antal Rätt" after a slight delay
+    const resultTimeout = setTimeout(() => {
+      setShowResult(true);
+    }, 5500); // Slight delay after animation completion
+
+    return () => {
+      clearTimeout(timeout);
+      clearTimeout(resultTimeout);
+    };
+  }, [matchedNumbers]);
+
+  useEffect(() => {
+    if (finalMatchedAnimationCompleted) {
+      const timeout = setTimeout(() => {
+        const matchedCount = matchedNumbers.length;
+        setFinalMatchedNumber(matchedCount > 0 ? matchedCount : null);
+      }, 0); // Delay after animation completion for final number
+      return () => clearTimeout(timeout);
+    }
+  }, [finalMatchedAnimationCompleted, matchedNumbers]);
+
+  useEffect(() => {
+    if (animationCompleted) {
+      const timeout = setTimeout(() => {
+        setFinalMatchedAnimationCompleted(true);
+      }, 0); // Delay after animation completion
+      return () => clearTimeout(timeout);
+    }
+  }, [animationCompleted]);
 
   const parseWinningNumbersFromFeed = (xmlDoc: Document) => {
     try {
@@ -97,7 +136,26 @@ const LotteryComparison = () => {
 
   return (
     <div className="container text-center">
-      <h1 className="honk-font fs-1">Vinst Dragningen</h1>
+      <div>
+        <h3
+          className={`honk-font fs-1 mt-2 ${
+            showResult && "show grattis-message"
+          }`}
+        >
+          {showResult &&
+            (matchedNumbers.length > 0
+              ? "Grattis! En vinst!"
+              : "Tyvärr, inga rätt!")}
+        </h3>
+      </div>
+      <div>
+        {animationCompleted && (
+          <h3 className="honk-font fs-1 mt-2 show antal-ratt-message">
+            Antal Rätt: {matchedNumbers.length}
+          </h3>
+        )}
+      </div>
+      <h1 className="honk-font fs-1">Rätt Rad</h1>
       <div className="text-xl animated-winning-numbers ball">
         {winningNumbers.map((number, index) => (
           <span
@@ -108,36 +166,42 @@ const LotteryComparison = () => {
           </span>
         ))}
       </div>
-
+  
       <h2 className="honk-font fs-1 mt-1">Dina Rader:</h2>
       {userNumbers.map((row, rowIndex) => (
-        <div key={rowIndex} className="row-numbers mt-1 p-1 mx-auto">
-          <div className="user-numbers">
-            {row.map((number, index) => (
-              <span
-                key={index}
-                className={`user-number ${
-                  matchedNumbers.includes(number) && "matched-numbers-row"
-                }`}
-              >
-                {number}
+        <div key={rowIndex}>
+          <div className="row-numbers mt-1 p-1 mx-auto">
+            <div className="user-number-row">
+              {row.map((number, index) => {
+                const isMatched = matchedNumbers.includes(number);
+                return (
+                  <span
+                    key={index}
+                    className={`user-number ${
+                      isMatched && animationCompleted && "matched-numbers-row"
+                    }`}
+                  >
+                    {number}
+                  </span>
+                );
+              })}
+            </div>
+            <div className="matched-count">
+              <span className="honk-font fs-1 from-left">
+                Antal Rätt:{" "}
+                {finalMatchedAnimationCompleted
+                  ? finalMatchedNumber !== null
+                    ? row.filter((number) =>
+                        matchedNumbers.includes(number)
+                      ).length
+                    : "0"
+                  : ""}
               </span>
-            ))}
+            </div>
           </div>
+          {rowIndex < userNumbers.length - 1 && <hr className="blue-line" />}
         </div>
       ))}
-      <div>
-        <h3 className="honk-font fs-1 mt-2">
-          Antal Rätt: {matchedNumbers.length}
-        </h3>
-      </div>
-      <div>
-        <h3 className="honk-font fs-1 mt-2">
-          {matchedNumbers.length > 0
-            ? "Grattis! Du vann!"
-            : "Tyvärr, inga rätt!"}
-        </h3>
-      </div>
     </div>
   );
 };

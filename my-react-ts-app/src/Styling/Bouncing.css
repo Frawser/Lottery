@@ -1,4 +1,34 @@
 /* Keyframes */
+@keyframes showOutline {
+  0% {
+    border-width: 0;
+  }
+  100% {
+    border-width: 6px;
+  }
+}
+
+@keyframes showGrattis {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes showAntalRatt {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
 @keyframes bounce-in-zoomin {
   0% {
@@ -70,21 +100,35 @@
   justify-content: center;
 }
 
+.from-left {
+  animation: showGrattis 1s ease-out forwards;
+
+}
+
 .row-numbers {
   margin-top: 5px;
   padding: 5px;
-
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
   border-radius: 5px;
 }
 
 .matched-numbers-row {
   border: 4px solid #5dff78;
+  animation: showOutline 0.5s linear 0s 1 normal both;
 }
 
+.user-number-row {
+  display: flex;
+  animation: showGrattis 0.5s ease-out forwards;
+}
 .user-number {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
+  flex-wrap: wrap;
   width: 50px;
   height: 50px;
   margin: 5px;
@@ -92,6 +136,21 @@
   color: #fff;
   font-size: 24px;
   border-radius: 50%;
+}
+
+.grattis-message {
+  font-size: 24px;
+  color: #00ff00; /* Green color */
+  animation: showGrattis 0.5s ease-out forwards;
+}
+
+.antal-ratt-message {
+  font-size: 24px;
+  color: #ff0000; /* Red color */
+  animation: showAntalRatt 0.5s ease-out forwards;
+}
+.matched-count {
+  margin-left: 10px;
 }
 /* Nth Classes */
 .animated-winning-number:nth-child(1) {
