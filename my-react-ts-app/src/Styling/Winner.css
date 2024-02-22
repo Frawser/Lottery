@@ -1,0 +1,255 @@
+@keyframes scale-in-center-1 {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  25% {
+    transform: scale(1.5);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  75% {
+    transform: scale(1.5);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes scale-in-center-2 {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  25% {
+    transform: scale(1.5);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  75% {
+    transform: scale(1.5);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes scale-in-center-3 {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  25% {
+    transform: scale(1.5);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  75% {
+    transform: scale(1.5);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes scale-in-center-4 {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  25% {
+    transform: scale(1.5);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  75% {
+    transform: scale(1.5);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes scale-in-center-5 {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  25% {
+    transform: scale(1.5);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  75% {
+    transform: scale(1.5);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes scale-in-center-6 {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  25% {
+    transform: scale(1.5);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  75% {
+    transform: scale(1.5);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes scale-in-center-7 {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  25% {
+    transform: scale(1.5);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  75% {
+    transform: scale(1.5);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes scale-in-center-8 {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  25% {
+    transform: scale(1.5);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  75% {
+    transform: scale(1.5);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.winner-ani-1 {
+  animation: scale-in-center-1 2s linear 6s infinite normal both;
+  font: 3em "honk", cursive;
+  font-weight: 400;
+  position: absolute;
+  top: 10%;
+  left: 10%;
+}
+
+.winner-ani-2 {
+  animation: scale-in-center-2 2s linear 6s infinite normal both;
+  font: 3em "honk", cursive;
+  font-weight: 400;
+  position: absolute;
+  top: 30%;
+  left: 10%;
+}
+
+.winner-ani-3 {
+  animation: scale-in-center-3 2s linear 6s infinite normal both;
+  font: 3em "honk", cursive;
+  font-weight: 400;
+  position: absolute;
+  top: 50%;
+  left: 10%;
+}
+
+.winner-ani-4 {
+  animation: scale-in-center-4 2s linear 6s infinite normal both;
+  font: 3em "honk", cursive;
+  font-weight: 400;
+  position: absolute;
+  top: 70%;
+  left: 10%;
+}
+
+.winner-ani-5 {
+  animation: scale-in-center-5 2s linear 6s infinite normal both;
+  font: 3em "honk", cursive;
+  font-weight: 400;
+  position: absolute;
+  top: 10%;
+  left: 90%;
+}
+
+.winner-ani-6 {
+  animation: scale-in-center-6 2s linear 6s infinite normal both;
+  font: 3em "honk", cursive;
+  font-weight: 400;
+  position: absolute;
+  top: 30%;
+  left: 90%;
+}
+
+.winner-ani-7 {
+  animation: scale-in-center-7 2s linear 6s infinite normal both;
+  font: 3em "honk", cursive;
+  font-weight: 400;
+  position: absolute;
+  top: 50%;
+  left: 90%;
+}
+
+.winner-ani-8 {
+  animation: scale-in-center-8 2s linear 6s infinite normal both;
+  font: 3em "honk", cursive;
+  font-weight: 400;
+  position: absolute;
+  top: 70%;
+  left: 90%;
+}

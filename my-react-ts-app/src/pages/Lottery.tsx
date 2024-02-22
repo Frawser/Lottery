@@ -1,42 +1,59 @@
 import React, { useState, useEffect } from "react";
-
+import fetchDataFromUrl from "../Api-fetcher/fetchDataFromUrl";
 import "../Styling/Bouncing.css";
 import "../Styling/Background.css";
 import "../Styling/Firework.css";
+import "../Styling/Vinst.css";
+import "../Styling/Winner.css";
+
+// Define the type for the data you expect from the API
+interface LotteryData {
+  drawResult: string;
+  customerNumber: string;
+  winAmount: string;
+  winAmountCurreny: string;
+}
 
 const LotteryComparison = () => {
   const [winningNumbers, setWinningNumbers] = useState<number[]>([]);
   const [userNumbers, setUserNumbers] = useState<number[][]>([]);
   const [matchedNumbers, setMatchedNumbers] = useState<number[]>([]);
   const [numberOfRows, setNumberOfRows] = useState(1);
-  const [animationCompleted, setAnimationCompleted] = useState(false); // State variable for animation completion
-  const [showResult, setShowResult] = useState(false); // State variable to control the display of result
+  const [animationCompleted, setAnimationCompleted] = useState(false);
+  const [showResult, setShowResult] = useState(false);
   const [finalMatchedNumber, setFinalMatchedNumber] = useState<number | null>(
     null
   );
   const [finalMatchedAnimationCompleted, setFinalMatchedAnimationCompleted] =
     useState(false);
+  const [amountWon, setAmountWon] = useState<number>(0);
+  const [numMatchingNumbers, setNumMatchingNumbers] = useState<number>(0);
+  const [data, setData] = useState<LotteryData | null>(null);
+  const [showAntalRatt, setShowAntalRatt] = useState(false);
+  const [showGreenOutline, setShowGreenOutline] = useState(false);
 
   useEffect(() => {
-    const fetchWinningNumbers = async () => {
-      try {
-        const response = await fetch(
-          "https://www.thelotter.se/rss.xml?languageid=9"
-        );
-        const xmlData = await response.text();
-
-        const parser = new DOMParser();
-        const xmlDoc = parser.parseFromString(xmlData, "text/xml");
-
-        const numbers = parseWinningNumbersFromFeed(xmlDoc);
-        setWinningNumbers(numbers);
-      } catch (error) {
-        console.error("Error fetching winning numbers from RSS feed:", error);
-      }
-    };
-
-    fetchWinningNumbers();
+    fetchDataFromUrl()
+      .then((responseData: LotteryData) => {
+        setData(responseData); // Store the fetched data in the state
+        console.log("Data fetched from URL:", responseData);
+      })
+      .catch((error) => {
+        console.error("Error fetching data from URL:", error);
+      });
   }, []);
+
+  useEffect(() => {
+    if (data) {
+      setWinningNumbers(data.drawResult.split(";").map(Number));
+      setUserNumbers(
+        data.customerNumber
+          .split(",")
+          .map((row: string) => row.split(";").map(Number))
+      );
+      setAnimationCompleted(true);
+    }
+  }, [data]);
 
   useEffect(() => {
     const matched = userNumbers
@@ -46,20 +63,13 @@ const LotteryComparison = () => {
   }, [winningNumbers, userNumbers]);
 
   useEffect(() => {
-    const randomNumberOfRows = Math.floor(Math.random() * 5) + 1;
-    setNumberOfRows(randomNumberOfRows);
-    handleRandomizeUserNumbers(randomNumberOfRows);
-  }, []);
-
-  useEffect(() => {
     const timeout = setTimeout(() => {
       setAnimationCompleted(true);
-    }, 5500); // Animation duration
+    }, 5500);
 
-    // After animation completed, show "Antal Rätt" after a slight delay
     const resultTimeout = setTimeout(() => {
       setShowResult(true);
-    }, 5500); // Slight delay after animation completion
+    }, 5500);
 
     return () => {
       clearTimeout(timeout);
@@ -72,60 +82,21 @@ const LotteryComparison = () => {
       const timeout = setTimeout(() => {
         const matchedCount = matchedNumbers.length;
         setFinalMatchedNumber(matchedCount > 0 ? matchedCount : null);
-      }, 0); // Delay after animation completion for final number
+        // Set the amount won based on the amount from the URL
+        setAmountWon(Number(data?.winAmount)); // Use data to access winAmount
+      }, 0);
       return () => clearTimeout(timeout);
     }
-  }, [finalMatchedAnimationCompleted, matchedNumbers]);
+  }, [finalMatchedAnimationCompleted, matchedNumbers, data]);
 
   useEffect(() => {
     if (animationCompleted) {
       const timeout = setTimeout(() => {
         setFinalMatchedAnimationCompleted(true);
-      }, 0); // Delay after animation completion
+      }, 0);
       return () => clearTimeout(timeout);
     }
   }, [animationCompleted]);
-
-  const parseWinningNumbersFromFeed = (xmlDoc: Document) => {
-    try {
-      const entries = xmlDoc.querySelectorAll("entry");
-
-      for (const entry of entries) {
-        const lotteryNameElement = entry.querySelector("lottery_name");
-        const lotteryName = lotteryNameElement?.textContent
-          ?.toLowerCase()
-          .trim();
-
-        console.log("Lottery Name:", lotteryName);
-
-        if (lotteryName?.includes("mega millions")) {
-          const lastDrawResults = entry
-            .querySelector("last_draw_results")
-            ?.textContent?.split(";")
-            .map((number) => parseInt(number.trim()));
-          const lastNumber = entry
-            .querySelector("last_draw_results")
-            ?.textContent?.split("+")
-            .pop()
-            ?.trim();
-
-          if (lastDrawResults && lastNumber) {
-            console.log("Last Draw Results:", [
-              ...lastDrawResults,
-              parseInt(lastNumber),
-            ]);
-            return [...lastDrawResults, parseInt(lastNumber)];
-          }
-        }
-      }
-
-      console.log("No Mega Millions data found in the feed.");
-      return [];
-    } catch (error) {
-      console.error("Error parsing XML data:", error);
-      return [];
-    }
-  };
 
   const handleRandomizeUserNumbers = (randomNumberOfRows: number) => {
     const rows = Array.from({ length: randomNumberOfRows }, () =>
@@ -134,8 +105,22 @@ const LotteryComparison = () => {
     setUserNumbers(rows);
   };
 
+  useEffect(() => {
+    const antalRattTimer = setTimeout(() => {
+      setShowAntalRatt(true); // Show "Antal Rätt" after 6 seconds
+    }, 6000);
+    return () => clearTimeout(antalRattTimer);
+  }, []);
+
+  useEffect(() => {
+    const greenOutlineTimer = setTimeout(() => {
+      setShowGreenOutline(true); // Show the green outline after 6 seconds
+    }, 6000);
+    return () => clearTimeout(greenOutlineTimer);
+  }, []);
+
   return (
-    <div className="container text-center">
+    <div className="container text-center" style={{ position: "relative" }}>
       <div>
         <h3
           className={`honk-font fs-1 mt-2 ${
@@ -149,24 +134,26 @@ const LotteryComparison = () => {
         </h3>
       </div>
       <div>
-        {animationCompleted && (
+        {animationCompleted && showAntalRatt && ( // Show "Antal Rätt" when animationCompleted and showAntalRatt is true
           <h3 className="honk-font fs-1 mt-2 show antal-ratt-message">
             Antal Rätt: {matchedNumbers.length}
           </h3>
         )}
       </div>
-      <h1 className="honk-font fs-1">Rätt Rad</h1>
+      <h1 className="honk-font fs-1">Rätt Rad:</h1>
       <div className="text-xl animated-winning-numbers ball">
         {winningNumbers.map((number, index) => (
           <span
             key={index}
-            className={`animated-winning-number rotate-hor-center`}
+            className={`animated-winning-number ${
+              index === winningNumbers.length - 1 ? "last-orange-ball" : ""
+            } rotate-hor-center`}
           >
             {number}
           </span>
         ))}
       </div>
-  
+
       <h2 className="honk-font fs-1 mt-1">Dina Rader:</h2>
       {userNumbers.map((row, rowIndex) => (
         <div key={rowIndex}>
@@ -178,7 +165,9 @@ const LotteryComparison = () => {
                   <span
                     key={index}
                     className={`user-number ${
-                      isMatched && animationCompleted && "matched-numbers-row"
+                      isMatched && animationCompleted && showGreenOutline
+                        ? "matched-numbers-row slide-top"
+                        : ""
                     }`}
                   >
                     {number}
@@ -187,21 +176,51 @@ const LotteryComparison = () => {
               })}
             </div>
             <div className="matched-count">
-              <span className="honk-font fs-1 from-left">
-                Antal Rätt:{" "}
-                {finalMatchedAnimationCompleted
-                  ? finalMatchedNumber !== null
-                    ? row.filter((number) =>
-                        matchedNumbers.includes(number)
-                      ).length
-                    : "0"
-                  : ""}
-              </span>
+              {showAntalRatt && (
+                <span
+                  className={`honk-font fs-1 from-left ${
+                    finalMatchedAnimationCompleted ? "show" : ""
+                  }`}
+                >
+                  Antal Rätt:{" "}
+                  {finalMatchedAnimationCompleted
+                    ? finalMatchedNumber !== null
+                      ? row.filter((number) =>
+                          matchedNumbers.includes(number)
+                        ).length
+                      : "0"
+                    : ""}
+                </span>
+              )}
             </div>
           </div>
           {rowIndex < userNumbers.length - 1 && <hr className="blue-line" />}
         </div>
       ))}
+      {/* Render the card displaying the amount won and number of matching numbers */}
+      {animationCompleted && matchedNumbers.length > 0 && (
+        <div className="card vinst-card win-card">
+          <div className="card-body vinst-card-content">
+            <h5 className="card-title ">Vinstresultat</h5>
+            <p className="card-text">
+              Du vann: ${amountWon} med {matchedNumbers.length} matchande
+              nummer.
+            </p>
+          </div>
+        </div>
+      )}
+      {animationCompleted && finalMatchedAnimationCompleted && (
+        <div>
+          <p className="winner-ani-1">WINNER</p>
+          <p className="winner-ani-2">WINNER</p>
+          <p className="winner-ani-3">WINNER</p>
+          <p className="winner-ani-4">WINNER</p>
+          <p className="winner-ani-5">WINNER</p>
+          <p className="winner-ani-6">WINNER</p>
+          <p className="winner-ani-7">WINNER</p>
+          <p className="winner-ani-8">WINNER</p>
+        </div>
+      )}
     </div>
   );
 };
