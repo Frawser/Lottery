@@ -6,7 +6,7 @@ import "../Styling/Firework.css";
 import "../Styling/Vinst.css";
 import "../Styling/Winner.css";
 
-// Define the type for the data you expect from the API
+
 interface LotteryData {
   drawResult: string;
   customerNumber: string;
@@ -35,7 +35,7 @@ const LotteryComparison = () => {
   useEffect(() => {
     fetchDataFromUrl()
       .then((responseData: LotteryData) => {
-        setData(responseData); // Store the fetched data in the state
+        setData(responseData); 
         console.log("Data fetched from URL:", responseData);
       })
       .catch((error) => {
@@ -82,8 +82,8 @@ const LotteryComparison = () => {
       const timeout = setTimeout(() => {
         const matchedCount = matchedNumbers.length;
         setFinalMatchedNumber(matchedCount > 0 ? matchedCount : null);
-        // Set the amount won based on the amount from the URL
-        setAmountWon(Number(data?.winAmount)); // Use data to access winAmount
+        
+        setAmountWon(Number(data?.winAmount)); 
       }, 0);
       return () => clearTimeout(timeout);
     }
@@ -107,14 +107,14 @@ const LotteryComparison = () => {
 
   useEffect(() => {
     const antalRattTimer = setTimeout(() => {
-      setShowAntalRatt(true); // Show "Antal Rätt" after 6 seconds
+      setShowAntalRatt(true); 
     }, 6000);
     return () => clearTimeout(antalRattTimer);
   }, []);
 
   useEffect(() => {
     const greenOutlineTimer = setTimeout(() => {
-      setShowGreenOutline(true); // Show the green outline after 6 seconds
+      setShowGreenOutline(true); 
     }, 6000);
     return () => clearTimeout(greenOutlineTimer);
   }, []);
@@ -134,7 +134,7 @@ const LotteryComparison = () => {
         </h3>
       </div>
       <div>
-        {animationCompleted && showAntalRatt && ( // Show "Antal Rätt" when animationCompleted and showAntalRatt is true
+        {animationCompleted && showAntalRatt && ( 
           <h3 className="honk-font fs-1 mt-2 show antal-ratt-message">
             Antal Rätt: {matchedNumbers.length}
           </h3>
@@ -197,7 +197,7 @@ const LotteryComparison = () => {
           {rowIndex < userNumbers.length - 1 && <hr className="blue-line" />}
         </div>
       ))}
-      {/* Render the card displaying the amount won and number of matching numbers */}
+      
       {animationCompleted && matchedNumbers.length > 0 && (
         <div className="card vinst-card win-card">
           <div className="card-body vinst-card-content">
