@@ -2,10 +2,9 @@ import React, { useState, useEffect } from "react";
 import fetchDataFromUrl from "../Api-fetcher/fetchDataFromUrl";
 import "../Styling/Bouncing.css";
 import "../Styling/Background.css";
-import "../Styling/Firework.css";
+import "../Styling/Fonts.css";
 import "../Styling/Vinst.css";
 import "../Styling/Winner.css";
-
 
 interface LotteryData {
   drawResult: string;
@@ -35,7 +34,7 @@ const LotteryComparison = () => {
   useEffect(() => {
     fetchDataFromUrl()
       .then((responseData: LotteryData) => {
-        setData(responseData); 
+        setData(responseData);
         console.log("Data fetched from URL:", responseData);
       })
       .catch((error) => {
@@ -82,8 +81,8 @@ const LotteryComparison = () => {
       const timeout = setTimeout(() => {
         const matchedCount = matchedNumbers.length;
         setFinalMatchedNumber(matchedCount > 0 ? matchedCount : null);
-        
-        setAmountWon(Number(data?.winAmount)); 
+
+        setAmountWon(Number(data?.winAmount));
       }, 0);
       return () => clearTimeout(timeout);
     }
@@ -107,14 +106,14 @@ const LotteryComparison = () => {
 
   useEffect(() => {
     const antalRattTimer = setTimeout(() => {
-      setShowAntalRatt(true); 
+      setShowAntalRatt(true);
     }, 6000);
     return () => clearTimeout(antalRattTimer);
   }, []);
 
   useEffect(() => {
     const greenOutlineTimer = setTimeout(() => {
-      setShowGreenOutline(true); 
+      setShowGreenOutline(true);
     }, 6000);
     return () => clearTimeout(greenOutlineTimer);
   }, []);
@@ -134,7 +133,7 @@ const LotteryComparison = () => {
         </h3>
       </div>
       <div>
-        {animationCompleted && showAntalRatt && ( 
+        {animationCompleted && showAntalRatt && (
           <h3 className="honk-font fs-1 mt-2 show antal-ratt-message">
             Antal Rätt: {matchedNumbers.length}
           </h3>
@@ -142,16 +141,23 @@ const LotteryComparison = () => {
       </div>
       <h1 className="honk-font fs-1">Rätt Rad:</h1>
       <div className="text-xl animated-winning-numbers ball">
-        {winningNumbers.map((number, index) => (
-          <span
-            key={index}
-            className={`animated-winning-number ${
-              index === winningNumbers.length - 1 ? "last-orange-ball" : ""
-            } rotate-hor-center`}
-          >
-            {number}
-          </span>
-        ))}
+        {winningNumbers.map((number, index) => {
+          const isMatched = matchedNumbers.includes(number);
+          return (
+            <span
+              key={index}
+              className={`animated-winning-number ${
+                index === winningNumbers.length - 1 ? "last-orange-ball" : ""
+              } ${
+                isMatched && animationCompleted && showGreenOutline
+                  ? "matched-numbers-row slide-top"
+                  : ""
+              }`}
+            >
+              {number}
+            </span>
+          );
+        })}
       </div>
 
       <h2 className="honk-font fs-1 mt-1">Dina Rader:</h2>
@@ -185,9 +191,8 @@ const LotteryComparison = () => {
                   Antal Rätt:{" "}
                   {finalMatchedAnimationCompleted
                     ? finalMatchedNumber !== null
-                      ? row.filter((number) =>
-                          matchedNumbers.includes(number)
-                        ).length
+                      ? row.filter((number) => matchedNumbers.includes(number))
+                          .length
                       : "0"
                     : ""}
                 </span>
@@ -197,13 +202,13 @@ const LotteryComparison = () => {
           {rowIndex < userNumbers.length - 1 && <hr className="blue-line" />}
         </div>
       ))}
-      
+
       {animationCompleted && matchedNumbers.length > 0 && (
         <div className="card vinst-card win-card">
           <div className="card-body vinst-card-content">
-            <h5 className="card-title ">Vinstresultat</h5>
+            <h5 className="card-title ">Vinstresultat:</h5>
             <p className="card-text">
-              Du vann: ${amountWon} med {matchedNumbers.length} matchande
+              Du vann: {amountWon}kr med {matchedNumbers.length} matchande
               nummer.
             </p>
           </div>
@@ -211,14 +216,42 @@ const LotteryComparison = () => {
       )}
       {animationCompleted && finalMatchedAnimationCompleted && (
         <div>
-          <p className="winner-ani-1">WINNER</p>
-          <p className="winner-ani-2">WINNER</p>
-          <p className="winner-ani-3">WINNER</p>
-          <p className="winner-ani-4">WINNER</p>
-          <p className="winner-ani-5">WINNER</p>
-          <p className="winner-ani-6">WINNER</p>
-          <p className="winner-ani-7">WINNER</p>
-          <p className="winner-ani-8">WINNER</p>
+          {matchedNumbers.length > 0 && matchedNumbers.length <= 2 && (
+            <>
+              <p className="winner-ani-1">WINNER</p>
+              <p className="winner-ani-5">WINNER</p>
+            </>
+          )}
+          {matchedNumbers.length > 2 && matchedNumbers.length <= 4 && (
+            <>
+              <p className="winner-ani-1">WINNER</p>
+              <p className="winner-ani-2">WINNER</p>
+              <p className="winner-ani-5">WINNER</p>
+              <p className="winner-ani-6">WINNER</p>
+            </>
+          )}
+          {matchedNumbers.length > 4 && (
+            <>
+              <p className="winner-ani-1">WINNER</p>
+              <p className="winner-ani-2">WINNER</p>
+              <p className="winner-ani-3">WINNER</p>
+              <p className="winner-ani-5">WINNER</p>
+              <p className="winner-ani-6">WINNER</p>
+              <p className="winner-ani-7">WINNER</p>
+            </>
+          )}
+          {matchedNumbers.length >= 6 && (
+            <>
+              <p className="winner-ani-1">BIG WIN!!!</p>
+              <p className="winner-ani-2">BIG WIN!!!</p>
+              <p className="winner-ani-3">BIG WIN!!!</p>
+              <p className="winner-ani-4">BIG WIN!!!</p>
+              <p className="winner-ani-5">BIG WIN!!!</p>
+              <p className="winner-ani-6">BIG WIN!!!</p>
+              <p className="winner-ani-7">BIG WIN!!!</p>
+              <p className="winner-ani-8">BIG WIN!!!</p>
+            </>
+          )}
         </div>
       )}
     </div>

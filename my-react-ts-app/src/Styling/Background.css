@@ -4,8 +4,8 @@
   background: linear-gradient(
     180deg,
     #2c1900 0%,
-    #4b0088 0%,
-    rgb(29, 0, 26) 100%
+    #fad6d6 0%,
+    rgb(112, 76, 243) 100%
   );
   background-size: cover;
   background-position: center;
@@ -22,6 +22,11 @@
   font-weight: 400;
   font-style: normal;
   font-variation-settings: "MORF" 15, "SHLN" 50;
+}
+.bungee-spice-regular {
+  font-family: "Bungee Spice", sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }
 
 body {
@@ -42,6 +47,3 @@ body {
   overflow: hidden;
   background: #111;
 }
-
-
-
